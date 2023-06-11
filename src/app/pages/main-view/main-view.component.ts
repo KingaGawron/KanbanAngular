@@ -39,7 +39,7 @@ export class MainViewComponent implements OnInit {
     this.inprogress.splice(i,1)
   }
   deleteDoneTask(i: number){
-    this.inprogress.splice(i,1)
+    this.done.splice(i,1)
   }
 
   onEdit(i:number,item:ITask){
