@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Board } from 'src/app/models/board.model';
 import { Column } from 'src/app/models/column.model';
+import {FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ITask } from 'src/app/models/task';
 
 @Component({
   selector: 'app-main-view',
@@ -10,33 +12,50 @@ import { Column } from 'src/app/models/column.model';
 })
 export class MainViewComponent implements OnInit {
 
-  constructor() { }
+  todoForm !: FormGroup;
+  task: ITask [] = [];
+  inprogress: ITask [] = [];
+  done: ITask [] = [];
+  updateIndex!:any;
+  isEditEnabled:boolean = false;
+  constructor(private fb: FormBuilder) { }
 
-  board: Board = new Board('', [
-    new Column('Ideas', [
-      "Lorem ipsum dolor sit amet",
-      "Lorem ipsum dolor sit amet",
-      "Lorem ipsum dolor sit amet"
-    ]),
-    new Column('Todo', [
-      'Lorem ipsum dolor sit amet',
-      'Lorem ipsum dolor sit amet',
-      'Lorem ipsum dolor sit amet',
-      'Lorem ipsum dolor sit amet'
-    ]),
-    new Column('Done', [
-      'Lorem ipsum dolor sit amet',
-      'Lorem ipsum dolor sit amet',
-      'Lorem ipsum dolor sit amet',
-      'Lorem ipsum dolor sit amet',
-      'Lorem ipsum dolor sit amet'
-    ])
-  ]);
-
-  ngOnInit() {
+  ngOnInit(): void {
+    this.todoForm = this.fb.group({
+      item : ['',Validators.required]
+    })
+  }
+  addTask(){
+    this.task.push({
+      description:this.todoForm.value.item,
+      done: false
+    })
+    this.todoForm.reset();
+  }
+  deleteTask(i: number){
+    this.task.splice(i,1)
+  }
+  deleteInPrograssTask(i: number){
+    this.inprogress.splice(i,1)
+  }
+  deleteDoneTask(i: number){
+    this.inprogress.splice(i,1)
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  onEdit(i:number,item:ITask){
+    this.todoForm.controls['item'].setValue(item.description)
+    this.updateIndex = i;
+    this.isEditEnabled = true;
+  }
+  updateTask(){
+    this.task[this.updateIndex].description = this.todoForm.value.item;
+    this.task[this.updateIndex].done = false;
+    this.todoForm.reset();
+    this.updateIndex = undefined;
+    this.isEditEnabled = false;
+  }
+
+  drop(event: CdkDragDrop<ITask[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -46,4 +65,6 @@ export class MainViewComponent implements OnInit {
         event.currentIndex);
     }
   }
+
+
 }
