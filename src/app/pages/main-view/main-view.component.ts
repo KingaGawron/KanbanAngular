@@ -37,8 +37,19 @@ export class MainViewComponent implements OnInit {
   }
   
 
+editSubtask(task: ITask, subtask: ISubtask) {
+  // Przypisanie wartości do pola edycji podzadania
+  this.newSubtask = subtask.description;
 
-  
+  // Usunięcie istniejącego podzadania
+  const subtaskIndex = task.subtasks.indexOf(subtask);
+  if (subtaskIndex !== -1) {
+    task.subtasks.splice(subtaskIndex, 1);
+  }
+}
+
+
+
 
   deleteTask(i: number) {
     this.tasks.splice(i, 1);
@@ -61,7 +72,6 @@ export class MainViewComponent implements OnInit {
       task.subtasks.splice(subtaskIndex, 1);
     }
   }
-  
 
   deleteInPrograssTask(i: number) {
     this.inprogress.splice(i, 1);

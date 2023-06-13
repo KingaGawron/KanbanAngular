@@ -54,9 +54,9 @@
                           <button mat-icon-button color="primary" (click)="deleteSubtask(item, subtask)">
                             <mat-icon>delete</mat-icon>
                           </button>
-                          <button mat-icon-button color="primary" (click)="deleteSubtask(item, subtask)">
+                          <button mat-icon-button color="primary" (click)="editSubtask(item, subtask)">
                             <mat-icon>edit</mat-icon>
-                          </button>
+                          </button>                          
                         </div>
                       </div>
                       <div class="add-subtask">
@@ -77,12 +77,14 @@
               <h2>In progress</h2>
               <div cdkDropList #inprogressList="cdkDropList" [cdkDropListData]="inprogress" [cdkDropListConnectedTo]="[todoList, doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
                 <div class="example-box" *ngFor="let item of inprogress; let i = index" cdkDrag class="task">
+                  <div class="task-content">
                   <div class="task-description">{{ item.description }}</div>
                   <div class="box">
                     <button mat-icon-button color="primary" (click)="deleteInPrograssTask(i)">
                       <mat-icon>delete</mat-icon>
                     </button>
                   </div>
+                </div>
                   <mat-expansion-panel>
                     <mat-expansion-panel-header>
                       <mat-panel-title>
@@ -105,12 +107,14 @@
               <h2>Done</h2>
               <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[inprogressList]" class="example-list" (cdkDropListDropped)="drop($event)">
                 <div class="example-box" *ngFor="let item of done; let i = index" cdkDrag class="task">
+                  <div class="task-content">
                   <div class="task-description">{{ item.description }}</div>
                   <div class="box">
                     <button mat-icon-button color="primary" (click)="deleteDoneTask(i)">
                       <mat-icon>check_circle</mat-icon>
                     </button>
                   </div>
+                </div>
                   <mat-expansion-panel>
                     <mat-expansion-panel-header>
                       <mat-panel-title>

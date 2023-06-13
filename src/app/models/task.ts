@@ -7,6 +7,7 @@ export interface ITask {
   export interface ISubtask {
     description: string;
     done: boolean;
+    
   }
   
   
