@@ -37,6 +37,9 @@ export class MainViewComponent implements OnInit {
   }
   
 
+
+  
+
   deleteTask(i: number) {
     this.tasks.splice(i, 1);
   }
