@@ -102,3 +102,46 @@ button.mat-icon-button {
 .tasks-container.cdk-drop-list-dragging .task:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+.task {
+  display: flex;
+  align-items: center;
+}
+
+.task-description {
+  white-space: pre-wrap;
+  word-break: break-word;
+  flex: 1;
+}
+
+.box {
+  margin-left: 10px;
+}
+
+
+.details-button {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+}
+
+.details-button .mat-icon {
+  font-size: 18px;
+}
+.mat-expansion-panel {
+  max-width: 40%;
+  overflow: hidden;
+}
+.subtask-input {
+  width: 80%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.subtask {
+  width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+

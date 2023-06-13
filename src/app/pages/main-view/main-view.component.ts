@@ -41,26 +41,23 @@ export class MainViewComponent implements OnInit {
     this.tasks.splice(i, 1);
   }
 
-  addSubtask(taskIndex: number, subtaskDescription: string) {
-    const task = this.tasks[taskIndex];
-    if (task.subtasks === undefined) {
-      task.subtasks = [];
+  addSubtask(task: ITask) {
+    if (this.newSubtask.trim() !== '') {
+      const subtask: ISubtask = {
+        description: this.newSubtask.trim(),
+        done: false
+      };
+      task.subtasks.push(subtask);
+      this.newSubtask = '';
     }
-    const subtask: ISubtask = {
-      description: subtaskDescription,
-      done: false
-    };
-    task.subtasks.push(subtask);
   }
   
-  
-  deleteSubtask(taskIndex: number, subtaskIndex: number) {
-    const task = this.tasks[taskIndex];
-    if (task.subtasks !== undefined) {
+  deleteSubtask(task: ITask, subtask: ISubtask) {
+    const subtaskIndex = task.subtasks.indexOf(subtask);
+    if (subtaskIndex !== -1) {
       task.subtasks.splice(subtaskIndex, 1);
     }
   }
-  
   
 
   deleteInPrograssTask(i: number) {

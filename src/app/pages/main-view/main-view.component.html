@@ -29,8 +29,8 @@
             <div class="example-container">
               <h2>To do</h2>
               <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="tasks" [cdkDropListConnectedTo]="[doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let item of tasks; let i = index" cdkDrag>
-                  {{ item.description }}
+                <div class="example-box" *ngFor="let item of tasks; let i = index" cdkDrag class="task">
+                  <div class="task-description">{{ item.description }}</div>
                   <div class="box">
                     <button mat-icon-button color="primary" (click)="deleteTask(i)">
                       <mat-icon>delete</mat-icon>
@@ -49,16 +49,19 @@
                       <div *ngFor="let subtask of item.subtasks; let subtaskIndex = index" class="subtask">
                         {{ subtask.description }}
                         <div class="box">
-                          <button mat-icon-button color="primary" (click)="deleteSubtask(i, subtaskIndex)">
+                          <button mat-icon-button color="primary" (click)="deleteSubtask(item, subtask)">
                             <mat-icon>delete</mat-icon>
                           </button>
-                          
                         </div>
                       </div>
+                      <div class="add-subtask">
+                        <input type="text" [(ngModel)]="newSubtask" placeholder="Dodaj podzadanie" class="subtask-input"/>
+                        <button mat-icon-button color="primary" (click)="addSubtask(item)">
+                          <mat-icon>add</mat-icon>
+                        </button>
+                      </div>
+                      
                     </div>
-                    <button mat-icon-button color="primary" (click)="addSubtask(i, 'Nowe podzadanie')">
-                      <mat-icon>add</mat-icon>
-                    </button>
                    
                   </mat-expansion-panel>
                 </div>
@@ -76,9 +79,7 @@
                     <button mat-icon-button color="primary" (click)="deleteInPrograssTask(i)">
                       <mat-icon>delete</mat-icon>
                     </button>
-                    <button mat-icon-button color="primary" (click)="onEdit(i, item)">
-                      <mat-icon>edit</mat-icon>
-                    </button>
+                    
                   </div>
                   <mat-expansion-panel>
                     <mat-expansion-panel-header>
@@ -89,17 +90,17 @@
                     <div *ngIf="item.subtasks">
                       <div *ngFor="let subtask of item.subtasks; let subtaskIndex = index" class="subtask">
                         {{ subtask.description }}
-                        <div class="box">
-                          <button mat-icon-button color="primary" (click)="deleteSubtask(i, subtaskIndex)">
+                        <!-- <div class="box">
+                          <button mat-icon-button color="primary" (click)="deleteSubtaskInprogress(i, subtaskIndex)">
                             <mat-icon>delete</mat-icon>
                           </button>
                          
-                        </div>
+                        </div> -->
                       </div>
                     </div>
-                    <button mat-icon-button color="primary" (click)="addSubtask(i, '')">
+                    <!-- <button mat-icon-button color="primary" (click)="addSubtask(i, '')">
                       <mat-icon>add</mat-icon>
-                    </button>
+                    </button> -->
                   </mat-expansion-panel>
                 </div>
               </div>
@@ -114,11 +115,11 @@
                   {{ item.description }}
                   <div class="box">
                     <button mat-icon-button color="primary" (click)="deleteDoneTask(i)">
-                      <mat-icon>delete</mat-icon>
+                      <mat-icon>check_circle</mat-icon>
                     </button>
-                    <button mat-icon-button color="primary" (click)="onEdit(i, item)">
-                      <mat-icon>edit</mat-icon>
-                    </button>
+                    <!-- <button mat-icon-button color="primary">
+                      <mat-icon>check_circle</mat-icon>
+                    </button> -->
                   </div>
                   <mat-expansion-panel>
                     <mat-expansion-panel-header>
@@ -130,15 +131,15 @@
                       <div *ngFor="let subtask of item.subtasks; let subtaskIndex = index" class="subtask">
                         {{ subtask.description }}
                         <div class="box">
-                          <button mat-icon-button color="primary" (click)="deleteSubtask(i, subtaskIndex)">
+                          <!-- <button mat-icon-button color="primary" (click)="deleteSubtask(i, subtaskIndex)">
                             <mat-icon>delete</mat-icon>
-                          </button>                          
+                          </button>                           -->
                         </div>
                       </div>
                     </div>
-                    <button mat-icon-button color="primary" (click)="addSubtask(i, '')">
+                    <!-- <button mat-icon-button color="primary" (click)="addSubtask(i, '')">
                       <mat-icon>add</mat-icon>
-                    </button>
+                    </button> -->
                   </mat-expansion-panel>
                 </div>
               </div>
