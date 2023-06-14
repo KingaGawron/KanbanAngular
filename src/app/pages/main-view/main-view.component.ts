@@ -24,6 +24,19 @@ export class MainViewComponent implements OnInit {
     this.todoForm = this.fb.group({
       item: ['', Validators.required]
     });
+    const savedTasks = localStorage.getItem('tasks');
+    if (savedTasks) {
+      this.tasks = JSON.parse(savedTasks);
+    }
+    const savedInprogress = localStorage.getItem('inprogress');
+    if (savedInprogress) {
+      this.inprogress = JSON.parse(savedInprogress);
+    }
+    const savedDone = localStorage.getItem('done');
+    if (savedDone) {
+      this.done = JSON.parse(savedDone);
+    }
+
   }
 
   addTask() {
@@ -34,6 +47,7 @@ export class MainViewComponent implements OnInit {
     };
     this.tasks.push(newTask);
     this.todoForm.reset();
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
   
 
@@ -46,6 +60,7 @@ editSubtask(task: ITask, subtask: ISubtask) {
   if (subtaskIndex !== -1) {
     task.subtasks.splice(subtaskIndex, 1);
   }
+  localStorage.setItem('tasks', JSON.stringify(this.tasks));
 }
 
 
@@ -53,6 +68,7 @@ editSubtask(task: ITask, subtask: ISubtask) {
 
   deleteTask(i: number) {
     this.tasks.splice(i, 1);
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
 
   addSubtask(task: ITask) {
@@ -64,6 +80,7 @@ editSubtask(task: ITask, subtask: ISubtask) {
       task.subtasks.push(subtask);
       this.newSubtask = '';
     }
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
   
   deleteSubtask(task: ITask, subtask: ISubtask) {
@@ -71,20 +88,24 @@ editSubtask(task: ITask, subtask: ISubtask) {
     if (subtaskIndex !== -1) {
       task.subtasks.splice(subtaskIndex, 1);
     }
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
 
   deleteInPrograssTask(i: number) {
     this.inprogress.splice(i, 1);
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
 
   deleteDoneTask(i: number) {
     this.done.splice(i, 1);
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
 
   onEdit(i: number, item: ITask) {
     this.todoForm.controls['item'].setValue(item.description);
     this.updateIndex = i;
     this.isEditEnabled = true;
+    
   }
 
   updateTask() {
@@ -93,6 +114,7 @@ editSubtask(task: ITask, subtask: ISubtask) {
     this.todoForm.reset();
     this.updateIndex = undefined;
     this.isEditEnabled = false;
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
 
   drop(event: CdkDragDrop<ITask[]>) {
@@ -106,5 +128,8 @@ editSubtask(task: ITask, subtask: ISubtask) {
         event.currentIndex
       );
     }
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    localStorage.setItem('inprogress', JSON.stringify(this.inprogress));
+    localStorage.setItem('done', JSON.stringify(this.done));
   }
 }
